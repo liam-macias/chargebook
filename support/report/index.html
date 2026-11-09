@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Report a Data Error</title>
+<meta name="description" content="Report a wrong value in Chargebook.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../icon.png">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<header class="bar"><div class="in">
+  <a class="brand" href="../../"><img src="../../icon.png" alt="">Chargebook</a>
+  <nav><a href="../">Support</a><a href="../../privacy/">Privacy</a><a href="../../terms/">Terms</a></nav>
+</div></header>
+<main>
+<h1>Report a data error</h1>
+<p>The email below is filled in with what we need to find the value. Add what's wrong and the section that says otherwise.</p>
+<div class="card">
+<dl class="rows" id="fields">
+  <div><dt>Offense</dt><dd id="offense">—</dd></div>
+  <div><dt>Row</dt><dd id="attribute">—</dd></div>
+  <div><dt>Data version</dt><dd id="content">—</dd></div>
+  <div><dt>App</dt><dd id="app">—</dd></div>
+</dl>
+</div>
+<p><a class="button" id="send" href="mailto:liamacias@gmail.com?subject=Chargebook%20data%20report">Email the report</a></p>
+<p class="muted">Or write to liamacias@gmail.com with the details above.</p>
+</main>
+<footer>Chargebook · Lucker Dogs LLC</footer>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var keys = ["offense", "attribute", "content", "app"];
+  var lines = [];
+  keys.forEach(function (k) {
+    var v = (q.get(k) || "").slice(0, 200);
+    if (v) {
+      document.getElementById(k).textContent = v;
+      lines.push(k + ": " + v);
+    }
+  });
+  var subject = "Chargebook data report" + (q.get("offense") ? ": " + q.get("offense").slice(0, 80) : "");
+  var body = lines.join("\n") + "\n\nWhat's wrong:\n\nSection that says otherwise:\n";
+  document.getElementById("send").href = "mailto:liamacias@gmail.com?subject=" +
+    encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+})();
+</script>
+</body>
+</html>
